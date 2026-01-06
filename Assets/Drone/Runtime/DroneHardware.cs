@@ -3,12 +3,13 @@ using UnityEngine;
 namespace Drone.Runtime
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class DroneController : MonoBehaviour
+	public class DroneHardware : MonoBehaviour
 	{
 		[Header("Chassis")] 
 		public float mass = 1.0f;
 		public float armLength = 0.5f;
 		public float motorHeight = 0.1f;
+		public float torqueFactor = 0.02f; // TODO: Change to more physics correct calculation
 		
 		[Header("Visualization")]
 		public Vector3 bodySize = new Vector3(0.3f, 0.1f, 0.15f);
@@ -78,6 +79,14 @@ namespace Drone.Runtime
 			_rb.AddForceAtPosition(forceDir * fr, _motorTransforms[1].position);
 			_rb.AddForceAtPosition(forceDir * bl, _motorTransforms[2].position);
 			_rb.AddForceAtPosition(forceDir * br, _motorTransforms[3].position);
+			
+			float torqueFL = -fl * torqueFactor;
+			float torqueFR =  fr * torqueFactor;
+			float torqueBL =  bl * torqueFactor;
+			float torqueBR = -br * torqueFactor;
+
+			float totalYawTorque = torqueFL + torqueFR + torqueBL + torqueBR;
+			_rb.AddRelativeTorque(transform.up * totalYawTorque);
 		}
 		
 		private void OnDrawGizmos()

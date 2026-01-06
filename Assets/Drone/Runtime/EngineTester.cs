@@ -4,7 +4,7 @@ namespace Drone.Runtime
 {
 	public class EngineTester : MonoBehaviour
 	{
-		public DroneController drone;
+		public DroneHardware drone;
     
 		[Range(0, 20)] public float testForce = 0f; 
 

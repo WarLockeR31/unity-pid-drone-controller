@@ -119,6 +119,20 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &265759823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Move
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +270,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &357605916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Thrust
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: c42c904b-30bf-4dc3-a9b6-24d676321195
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +411,20 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &568887261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Yaw
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: 86da8383-2b7f-4ca1-aaef-6a25cf4dde73
 --- !u!1 &710682855
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,8 +434,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 710682857}
+  - component: {fileID: 710682861}
   - component: {fileID: 710682856}
-  - component: {fileID: 710682858}
+  - component: {fileID: 710682862}
   - component: {fileID: 710682860}
   - component: {fileID: 710682859}
   m_Layer: 0
@@ -437,20 +480,6 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &710682858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710682855}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8c59c7826a4f4aaa1b3419bebcea73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.EngineTester
-  drone: {fileID: 710682856}
-  testForce: 0
 --- !u!65 &710682859
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -499,6 +528,40 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &710682861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710682855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b5d674ecf74f3581bdec2add60efe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.DroneInputs
+  moveAction: {fileID: 265759823}
+  yawAction: {fileID: 568887261}
+  throttleAction: {fileID: 357605916}
+--- !u!114 &710682862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710682855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce23702fa17438d8f9b10607453a10f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.DroneFlightController
+  pitchSettings: {fileID: 11400000, guid: dd73a9f1c10ba1742930248a8a0f6598, type: 2}
+  rollSettings: {fileID: 11400000, guid: 755d1205b584c7a40bd61fdd3fdba102, type: 2}
+  yawSettings: {fileID: 11400000, guid: c5df10a28d4532d449467b598ef50e07, type: 2}
+  altitudeSettings: {fileID: 11400000, guid: 1c7f9c18fcc5f68419e270e9eb199902, type: 2}
+  maxTiltAngle: 30
+  maxYawSpeed: 90
+  maxClimbSpeed: 5
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.PID.PIDConfig
   Kp: 1
   Ki: 1
-  Kd: 0.2
+  Kd: 0.02
   maxOutput: 10
   integralSaturation: 10

@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleStabilization",
+                    "type": "Button",
+                    "id": "f3bc17f6-109c-4a42-9a6d-caac33898377",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -305,6 +314,28 @@
                     "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6c8ec0eb-0774-40ce-8091-2a99fa7ad6d7",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleStabilization",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c604a1e0-fd58-4f53-ba58-3936f713fedb",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleStabilization",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

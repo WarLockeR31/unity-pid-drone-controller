@@ -11,13 +11,15 @@ namespace Drone.Runtime
 	    public PIDConfig pitchSettings;
 	    public PIDConfig rollSettings;
 	    public PIDConfig yawSettings;
-	    public PIDConfig altitudeSettings; 
+	    public PIDConfig altitudeSettings;
+		public PIDConfig velocitySettings;
 	
 	    [Header("Flight Characteristics")]
 	    public float maxTiltAngle = 30f;
 	    public float maxYawSpeed = 90f;
 	    public float maxClimbSpeed = 5f;
 		[Range(0, 1)] public float idleThrottle = 0.05f;
+		public float inputDeadzone = 0.05f;
 	
 	    private DroneHardware _hardware;
 	    private DroneInputs _inputs;
@@ -27,6 +29,7 @@ namespace Drone.Runtime
 	    private PIDController _rollPID;
 	    private PIDController _yawPID;
 	    private PIDController _altPID;
+		private PIDController _velPID;
 	
 	    private void Awake()
 	    {
@@ -38,14 +41,30 @@ namespace Drone.Runtime
 	        _rollPID = new PIDController(rollSettings);
 	        _yawPID = new PIDController(yawSettings);
 	        _altPID = new PIDController(altitudeSettings);
+			_velPID = new PIDController(velocitySettings);
 	    }
 	
 	    private void FixedUpdate()
 	    {
 	        float dt = Time.fixedDeltaTime;
+			bool hasCyclicInput = _inputs.Cyclic.magnitude > inputDeadzone;
+
+			float targetPitch, targetRoll;
+			if (_inputs.IsStabilizationActive && !hasCyclicInput)
+			{
+				Vector3 localVel = transform.InverseTransformDirection(_rb.linearVelocity);
+				float vPitchOut = _velPID.Compute(-localVel.z, dt);
+				float vRollOut = _velPID.Compute(localVel.x, dt);
+				targetPitch = Mathf.Clamp(vPitchOut, -maxTiltAngle, maxTiltAngle);
+				targetRoll = Mathf.Clamp(vRollOut, -maxTiltAngle, maxTiltAngle);
+			}
+			else
+			{
+				targetPitch = _inputs.Cyclic.y * maxTiltAngle;
+				targetRoll = -_inputs.Cyclic.x * maxTiltAngle;
+			}
 	
-	        float targetPitch = _inputs.Cyclic.y * maxTiltAngle;
-	        float targetRoll = -_inputs.Cyclic.x * maxTiltAngle;
+	        
 	        float targetYawRate = _inputs.Yaw * maxYawSpeed;
 	        float targetVelY = _inputs.Throttle * maxClimbSpeed;
 	

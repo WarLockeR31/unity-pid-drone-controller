@@ -10,10 +10,12 @@ namespace Drone.Runtime
 		public InputActionReference rollAction;
 		public InputActionReference yawAction;     
 		public InputActionReference throttleAction;
+		public InputActionReference toggleStabilizationAction;
 
 		public Vector2 Cyclic { get; private set; } 
 		public float Yaw { get; private set; }
 		public float Throttle { get; private set; }
+		public bool IsStabilizationActive { get; private set; }
 
 		private void Awake()
 		{
@@ -25,6 +27,8 @@ namespace Drone.Runtime
 				Debug.LogError("Yaw action is not set!");
 			if (throttleAction == null)
 				Debug.LogError("Throttle action is not set!");
+			if (toggleStabilizationAction == null)
+				Debug.LogError("Toggle stabilization action is not set!");
 		}
 		
 		private void Update()
@@ -32,6 +36,11 @@ namespace Drone.Runtime
 			Cyclic = new Vector2(rollAction.action.ReadValue<float>(), pitchAction.action.ReadValue<float>());
 			Yaw = yawAction.action.ReadValue<float>();
 			Throttle = throttleAction.action.ReadValue<float>();
+			if (toggleStabilizationAction.action.WasPressedThisFrame())
+			{
+				IsStabilizationActive = !IsStabilizationActive;
+				Debug.Log($"Stabilization Mode: {IsStabilizationActive}");
+			}
 		}
 
 		private void OnEnable()
@@ -40,6 +49,7 @@ namespace Drone.Runtime
 			rollAction?.action.Enable();
 			yawAction?.action.Enable();
 			throttleAction?.action.Enable();
+			toggleStabilizationAction?.action.Enable();
 		}
     
 		private void OnDisable()
@@ -48,6 +58,7 @@ namespace Drone.Runtime
 			rollAction?.action.Disable();
 			yawAction?.action.Disable();
 			throttleAction?.action.Disable();
+			toggleStabilizationAction?.action.Disable();
 		}
 	}
 }

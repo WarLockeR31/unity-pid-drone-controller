@@ -6,7 +6,8 @@ namespace Drone.Runtime
 	public class DroneInputs : MonoBehaviour
 	{
 		[Header("Input Action References")]
-		public InputActionReference moveAction;    
+		public InputActionReference pitchAction; 
+		public InputActionReference rollAction;
 		public InputActionReference yawAction;     
 		public InputActionReference throttleAction;
 
@@ -16,8 +17,10 @@ namespace Drone.Runtime
 
 		private void Awake()
 		{
-			if (moveAction == null)
-				Debug.LogError("Move action is not set!");
+			if (pitchAction == null)
+				Debug.LogError("Pitch action is not set!");
+			if (rollAction == null)
+				Debug.LogError("Roll action is not set!");
 			if (yawAction == null)
 				Debug.LogError("Yaw action is not set!");
 			if (throttleAction == null)
@@ -26,21 +29,23 @@ namespace Drone.Runtime
 		
 		private void Update()
 		{
-			Cyclic = moveAction.action.ReadValue<Vector2>();
+			Cyclic = new Vector2(rollAction.action.ReadValue<float>(), pitchAction.action.ReadValue<float>());
 			Yaw = yawAction.action.ReadValue<float>();
 			Throttle = throttleAction.action.ReadValue<float>();
 		}
 
 		private void OnEnable()
 		{
-			moveAction?.action.Enable();
+			pitchAction?.action.Enable();
+			rollAction?.action.Enable();
 			yawAction?.action.Enable();
 			throttleAction?.action.Enable();
 		}
     
 		private void OnDisable()
 		{
-			moveAction?.action.Disable();
+			pitchAction?.action.Disable();
+			rollAction?.action.Disable();
 			yawAction?.action.Disable();
 			throttleAction?.action.Disable();
 		}

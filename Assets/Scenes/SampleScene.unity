@@ -461,6 +461,7 @@ MonoBehaviour:
   mass: 1
   armLength: 0.5
   motorHeight: 0.1
+  torqueFactor: 0.02
   bodySize: {x: 0.3, y: 0.1, z: 0.15}
   motorSize: {x: 0.05, y: 0.05, z: 0.05}
   showDebugVectors: 1
@@ -525,7 +526,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &710682861
@@ -561,7 +562,8 @@ MonoBehaviour:
   altitudeSettings: {fileID: 11400000, guid: 1c7f9c18fcc5f68419e270e9eb199902, type: 2}
   maxTiltAngle: 30
   maxYawSpeed: 90
-  maxClimbSpeed: 5
+  maxClimbSpeed: 10
+  idleThrottle: 0.2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,7 +679,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7ff692a070b3b49478062399a4b71fa5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -718,8 +720,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

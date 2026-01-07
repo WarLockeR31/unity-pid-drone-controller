@@ -75,6 +75,7 @@ namespace Drone.Runtime
 
 			Vector3 forceDir = transform.up;
 
+			Debug.Log($"FL: {fl}, FR: {fr}, BL: {bl}, BR: {br}");
 			_rb.AddForceAtPosition(forceDir * fl, _motorTransforms[0].position);
 			_rb.AddForceAtPosition(forceDir * fr, _motorTransforms[1].position);
 			_rb.AddForceAtPosition(forceDir * bl, _motorTransforms[2].position);

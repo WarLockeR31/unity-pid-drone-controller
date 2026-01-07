@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434318e6e73864240a2ec1f9436794e3, type: 3}
   m_Name: YawConfig
   m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.PID.PIDConfig
-  Kp: 1
+  Kp: 0
   Ki: 0
   Kd: 0
-  maxOutput: 2
+  maxOutput: 10
   integralSaturation: 10

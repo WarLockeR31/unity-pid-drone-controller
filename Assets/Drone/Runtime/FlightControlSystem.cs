@@ -17,6 +17,7 @@ namespace Drone.Runtime
 	    public float maxTiltAngle = 30f;
 	    public float maxYawSpeed = 90f;
 	    public float maxClimbSpeed = 5f;
+		[Range(0, 1)] public float idleThrottle = 0.05f;
 	
 	    private DroneHardware _hardware;
 	    private DroneInputs _inputs;
@@ -63,8 +64,9 @@ namespace Drone.Runtime
 	        float altCorrection = _altPID.Compute(errorAlt, dt);
 	        
 	        float gravityCompensation = 9.81f * _rb.mass;
-	        float totalThrottle = /*gravityCompensation + */altCorrection;
-	        
+	        float requestedThrottle = Mathf.Max(gravityCompensation + altCorrection, idleThrottle * altitudeSettings.maxOutput) / 4f;
+			
+#if AIR_MODE
 	        // Front Left (CW)
 	        float fl = totalThrottle - pitchCorrection - rollCorrection - yawCorrection;
 	        // Front Right (CCW)
@@ -74,10 +76,49 @@ namespace Drone.Runtime
 	        // Back Right (CW)
 	        float br = totalThrottle + pitchCorrection + rollCorrection - yawCorrection;
 	
-	        fl = Mathf.Max(0, fl);
+	        /*fl = Mathf.Max(0, fl);
 	        fr = Mathf.Max(0, fr);
 	        bl = Mathf.Max(0, bl);
-	        br = Mathf.Max(0, br);
+	        br = Mathf.Max(0, br);*/
+			float minMotor = Mathf.Min(fl, Mathf.Min(fr, Mathf.Min(bl, br)));
+
+			if (minMotor < 0)
+			{
+				fl -= minMotor;
+				fr -= minMotor;
+				bl -= minMotor;
+				br -= minMotor;
+			}
+#else
+			float mixFL = -pitchCorrection - rollCorrection - yawCorrection;
+			float mixFR = -pitchCorrection + rollCorrection + yawCorrection;
+			float mixBL =  pitchCorrection - rollCorrection + yawCorrection;
+			float mixBR =  pitchCorrection + rollCorrection - yawCorrection;
+			
+			float minMix = Mathf.Min(mixFL, Mathf.Min(mixFR, Mathf.Min(mixBL, mixBR)));
+			float maxMix = Mathf.Max(mixFL, Mathf.Max(mixFR, Mathf.Max(mixBL, mixBR)));
+			
+			if (requestedThrottle + minMix < 0)
+			{
+				float availableRoom = requestedThrottle; 
+				float requiredRoom = -minMix;           
+				float scale = availableRoom / requiredRoom;
+    
+				pitchCorrection *= scale;
+				rollCorrection  *= scale;
+				yawCorrection   *= scale;
+			}
+
+			float fl = requestedThrottle - pitchCorrection - rollCorrection - yawCorrection;
+			float fr = requestedThrottle - pitchCorrection + rollCorrection + yawCorrection;
+			float bl = requestedThrottle + pitchCorrection - rollCorrection + yawCorrection;
+			float br = requestedThrottle + pitchCorrection + rollCorrection - yawCorrection;
+
+			fl = Mathf.Max(0, fl);
+			fr = Mathf.Max(0, fr);
+			bl = Mathf.Max(0, bl);
+			br = Mathf.Max(0, br);
+#endif
 	
 	        _hardware.ApplyMotorForces(fl, fr, bl, br);
 	    }

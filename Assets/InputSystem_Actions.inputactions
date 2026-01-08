@@ -16,15 +16,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Yaw",
-                    "type": "Value",
-                    "id": "86da8383-2b7f-4ca1-aaef-6a25cf4dde73",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Thrust",
                     "type": "Value",
                     "id": "c42c904b-30bf-4dc3-a9b6-24d676321195",
@@ -50,6 +41,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Yaw",
+                    "type": "Value",
+                    "id": "86da8383-2b7f-4ca1-aaef-6a25cf4dde73",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "ToggleStabilization",
@@ -129,15 +129,37 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "f23e3cf7-9b3b-4e8b-894e-b80cc0bbd0a6",
-                    "path": "<Gamepad>/leftStick/x",
+                    "name": "1D Axis",
+                    "id": "48c01463-d911-47a5-95bc-96134a6c0351",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Yaw",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "049400be-e9f4-41bc-a72d-f843a726390b",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Yaw",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "6b966fd6-9330-40c9-9707-4a162d36d8f8",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Yaw",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "1D Axis",
@@ -283,37 +305,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "48c01463-d911-47a5-95bc-96134a6c0351",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "f23e3cf7-9b3b-4e8b-894e-b80cc0bbd0a6",
+                    "path": "<Gamepad>/leftStick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Roll",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "049400be-e9f4-41bc-a72d-f843a726390b",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "6b966fd6-9330-40c9-9707-4a162d36d8f8",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Roll",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

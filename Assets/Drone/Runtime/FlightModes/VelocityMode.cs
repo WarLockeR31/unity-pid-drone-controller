@@ -3,52 +3,40 @@ using UnityEngine;
 
 namespace Drone.Runtime.FlightModes
 {
-	// ================= ANGLE + ALT HOLD =================
-	// Input -> Target Angle -> [AngleToRate] -> Target Rate
-	public class AngleAltHoldMode : IFlightMode
+	// ================= VELOCITY MODE =================
+	// Input (0..1) -> Target Velocity (0..MaxSpeed) -> [VelToAngle] -> Target Angle
+	public class VelocityMode : IFlightMode
 	{
+		private readonly VelocityToAngleController _velCtrl;
 		private readonly AngleToRateController _angleCtrl;
 		private readonly AltitudeController _altCtrl;
-		private readonly VelocityToAngleController _velCtrl; // For stabilization
-		
+	
 		private readonly float _maxTilt;
+		private readonly float _maxSpeed;
 		private readonly float _maxYawRate;
-		private readonly float _deadzone = 0.05f;
-        
-		public string ModeName => "ANGLE + ALT";
+
+		public string ModeName => "VELOCITY CRUISE";
 		public MixingStrategy Mixing => MixingStrategy.PrioritizeThrottle;
 
-		public AngleAltHoldMode(
+		public VelocityMode(
+			VelocityToAngleController velCtrl, 
 			AngleToRateController angleCtrl, 
-			AltitudeController altCtrl,
-			VelocityToAngleController velCtrl,
-			float maxTilt, 
-			float maxYawRate)
+			AltitudeController altCtrl, 
+			float maxTilt, float maxSpeed, float maxYawRate)
 		{
+			_velCtrl = velCtrl;
 			_angleCtrl = angleCtrl;
 			_altCtrl = altCtrl;
-			_velCtrl = velCtrl;
 			_maxTilt = maxTilt;
+			_maxSpeed = maxSpeed;
 			_maxYawRate = maxYawRate;
 		}
 
 		public FlightControlOutput Calculate(DroneInputs inputs, DroneState state, float dt)
 		{
-			Vector2 targetAngles;
+			Vector2 targetVelocity = new Vector2(inputs.Cyclic.x, inputs.Cyclic.y) * _maxSpeed;
 
-			if (inputs.IsStabilizationActive && inputs.Cyclic.magnitude < _deadzone)
-			{
-				// Braking
-				targetAngles = _velCtrl.GetTargetAngles(Vector2.zero, new Vector2(state.Velocity.x, state.Velocity.z), dt);
-			}
-			else
-			{
-				targetAngles = new Vector2(inputs.Cyclic.x, inputs.Cyclic.y) * _maxTilt;
-				
-				// TODO: Reset when stabilization toggled
-				_velCtrl.Reset(); 
-			}
-
+			Vector2 targetAngles = _velCtrl.GetTargetAngles(targetVelocity, new Vector2(state.Velocity.x, state.Velocity.z), dt);
 			Vector2 rates = _angleCtrl.GetTargetRates(targetAngles, state.Rotation, dt);
 			float thr = _altCtrl.GetThrottle(inputs.Throttle, state.VerticalVelocity, dt);
 
@@ -58,9 +46,10 @@ namespace Drone.Runtime.FlightModes
 				Throttle = thr
 			};
 		}
-
+	
 		public void Reset()
 		{
+			_velCtrl.Reset();
 			_angleCtrl.Reset();
 			_altCtrl.Reset();
 		}

@@ -50,24 +50,26 @@ namespace Drone.Runtime
             InitializeControllers();
         }
 
-        private void InitializeControllers()
-        {
-            _rateController = new RateController(pitchRateSettings, rollRateSettings, yawRateSettings);
+		private void InitializeControllers()
+		{
+			_rateController = new RateController(pitchRateSettings, rollRateSettings, yawRateSettings);
 
-            var angleCtrl = new AngleToRateController(pitchAngleSettings, rollAngleSettings, droneSettings.maxTiltAngle);
-            var altCtrl = new AltitudeController(altitudeSettings, droneSettings.maxClimbSpeed);
+			var angleCtrl = new AngleToRateController(pitchAngleSettings, rollAngleSettings, droneSettings.maxTiltAngle);
+			var altCtrl = new AltitudeController(altitudeSettings, droneSettings.maxClimbSpeed);
+			var velCtrl = new VelocityToAngleController(velocitySettings, droneSettings.maxTiltAngle);
 
-            _flightModes = new List<IFlightMode>
-            {
-                new RateMode(droneSettings.maxYawSpeed), 
-                new AngleAltHoldMode(angleCtrl, altCtrl, droneSettings.maxTiltAngle, droneSettings.maxYawSpeed),
-            };
-        }
+			_flightModes = new List<IFlightMode>
+			{
+				new RateMode(droneSettings.maxYawSpeed), 
+				new AngleAltHoldMode(angleCtrl, altCtrl, velCtrl, droneSettings.maxTiltAngle, droneSettings.maxYawSpeed),
+				new VelocityMode(velCtrl, angleCtrl, altCtrl, droneSettings.maxTiltAngle, droneSettings.maxHorizontalSpeed, droneSettings.maxYawSpeed)
+			};
+		}
 
         private void Update()
         {
             // TODO: Add hotkeys
-            if (_inputs.toggleStabilizationAction != null && _inputs.toggleStabilizationAction.action.WasPressedThisFrame())
+            if (_inputs.changeModeAction.action.WasPressedThisFrame())
             {
                 CycleMode();
             }

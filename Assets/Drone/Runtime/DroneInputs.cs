@@ -11,6 +11,7 @@ namespace Drone.Runtime
 		public InputActionReference yawAction;     
 		public InputActionReference throttleAction;
 		public InputActionReference toggleStabilizationAction;
+		public InputActionReference changeModeAction;
 
 		public Vector2 Cyclic { get; private set; } 
 		public float Yaw { get; private set; }
@@ -29,6 +30,8 @@ namespace Drone.Runtime
 				Debug.LogError("Throttle action is not set!");
 			if (toggleStabilizationAction == null)
 				Debug.LogError("Toggle stabilization action is not set!");
+			if (changeModeAction == null)
+				Debug.LogError("Change mode action is not set!");
 		}
 		
 		private void Update()
@@ -38,8 +41,10 @@ namespace Drone.Runtime
 			Throttle = throttleAction.action.ReadValue<float>();
 			if (toggleStabilizationAction.action.WasPressedThisFrame())
 			{
-				IsStabilizationActive = !IsStabilizationActive;
-				Debug.Log($"Stabilization Mode: {IsStabilizationActive}");
+				IsStabilizationActive = !IsStabilizationActive; 
+#if UNITY_EDITOR
+				Debug.Log($"Stabilization Mode: {IsStabilizationActive}"); 
+#endif
 			}
 		}
 

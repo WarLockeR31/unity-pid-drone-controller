@@ -5,7 +5,7 @@ using Drone.Runtime.PID;
 namespace Drone.Runtime.FlightModes
 {
     // ================= RATE MODE =================
-    // Вход -> Target Rate
+    // Input -> Target Rate
     public class RateMode : IFlightMode
     {
         private readonly float _maxRate;

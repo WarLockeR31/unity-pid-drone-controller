@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 434318e6e73864240a2ec1f9436794e3, type: 3}
-  m_Name: PitchConfig
+  m_Name: RatePitchRoll
   m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.PID.PIDConfig
-  Kp: 0.5
-  Ki: 0
-  Kd: 0.05
-  maxOutput: 5
-  integralSaturation: 10
+  Kp: 0.05
+  Ki: 0.01
+  Kd: 0.0001
+  maxOutput: 100000
+  integralSaturation: 1

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946db1e8aca843e98b1fdff2f4172c09, type: 3}
+  m_Name: DroneSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.DroneSettings
+  maxTiltAngle: 30
+  maxYawSpeed: 180
+  maxClimbSpeed: 10
+  maxHorizontalSpeed: 10
+  idleThrottle: 0.07
+  thrustToWeightRatio: 2

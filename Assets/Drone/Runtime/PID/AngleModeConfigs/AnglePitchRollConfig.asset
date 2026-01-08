@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 434318e6e73864240a2ec1f9436794e3, type: 3}
-  m_Name: RollConfig
+  m_Name: AnglePitchRollConfig
   m_EditorClassIdentifier: Assembly-CSharp::Drone.Runtime.PID.PIDConfig
-  Kp: 0.5
-  Ki: 0
-  Kd: 0.05
-  maxOutput: 5
+  Kp: 5
+  Ki: 0.1
+  Kd: 0.5
+  maxOutput: 200
   integralSaturation: 10

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Drone.Runtime.CascadeControllers;
 using Drone.Runtime.FlightModes;
@@ -22,6 +23,8 @@ namespace Drone.Runtime
 
         [Header("Characteristics")] 
         public DroneSettings droneSettings;
+		
+		public event Action<string> OnModeChanged;
 
         // Dependencies
         private DroneHardware _hardware;
@@ -36,6 +39,8 @@ namespace Drone.Runtime
         private int _currentModeIndex = 0;
 		
 		private float _maxMotorForce;
+		
+		public float MaxMotorForce => _maxMotorForce;
 
         private void Awake()
         {
@@ -49,6 +54,11 @@ namespace Drone.Runtime
 
             InitializeControllers();
         }
+
+		private void Start()
+		{
+			OnModeChanged?.Invoke(_flightModes[_currentModeIndex].ModeName);
+		}
 
 		private void InitializeControllers()
 		{
@@ -79,6 +89,7 @@ namespace Drone.Runtime
         {
             _currentModeIndex = (_currentModeIndex + 1) % _flightModes.Count;
             _flightModes[_currentModeIndex].Reset();
+			OnModeChanged?.Invoke(_flightModes[_currentModeIndex].ModeName);
 #if UNITY_EDITOR
             Debug.Log($"Switched to Mode: {_flightModes[_currentModeIndex].ModeName}");
 #endif

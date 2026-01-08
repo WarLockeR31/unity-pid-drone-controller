@@ -15,6 +15,8 @@ namespace Drone.Runtime
 		public Vector3 bodySize = new Vector3(0.3f, 0.1f, 0.15f);
 		public Vector3 motorSize = new Vector3(0.05f, 0.05f, 0.05f);
 		public bool	showDebugVectors = false;
+		
+		public float[] CurrentForces => _currentForces;
 
 		private Transform[] _motorTransforms;
 		private float[] _currentForces;
